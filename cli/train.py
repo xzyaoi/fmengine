@@ -74,7 +74,7 @@ if __name__ == "__main__":
     # setup deepspeed and other stuff
     assert ds_args.use_deepspeed
     deepspeed.init_distributed(dist_backend="nccl")
-
+    # get a torch process group
     ds_args.world_size = torch.distributed.get_world_size()
     if ds_args.local_rank is None:
         ds_args.local_rank = int(os.environ["LOCAL_RANK"])

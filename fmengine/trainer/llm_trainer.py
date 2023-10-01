@@ -6,7 +6,7 @@ from deepspeed.profiling.flops_profiler import FlopsProfiler
 from fmengine.utils import logger_rank0
 from fmengine.utils.monitor import rank0_init_wandb
 from timeit import default_timer as timer
-
+import fmengine.mpu as mpu
 
 class LLMTrainer:
     """
@@ -78,9 +78,11 @@ class LLMTrainer:
                     prof.print_model_profile(profile_step=profile_step)
                     prof.end_profile()
                     del prof
+            
             if step % save_per_steps == 0:
                 logger_rank0.info(f"Saving at step {step}")
                 engine.save_checkpoint(self.save_dir)
+        
         logger_rank0.info(
             "Finished training... saving checkpoints & closing monitoring"
         )
