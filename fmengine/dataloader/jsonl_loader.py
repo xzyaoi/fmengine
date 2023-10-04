@@ -67,10 +67,11 @@ def get_jsonl_dataloader(jsonl_path, tokenizer, args):
     streaming = args.get("streaming", False)
     seed = args.get("seed", 42)
     batch_size = args.get("batch_size", 1)
+    doc_sep = args.get("doc_sep", "\n")
 
     def tokenize(examples):
         examples = tokenizer(
-            examples["text"],
+            examples["text"] + doc_sep,
             truncation=True,
             max_length=ctx_length
         )

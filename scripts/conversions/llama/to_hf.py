@@ -1,9 +1,13 @@
 from fmengine.modeling.llama.hf_interface import to_hf_model
 
-
 def main(args):
     print(args)
-    to_hf_model(args.in_model_path, args.model_family, args.out_model_path)
+    to_hf_model(
+        args.in_model_path,
+        args.model_family,
+        args.out_model_path,
+        step=args.step
+    )
 
 
 if __name__ == "__main__":
@@ -19,6 +23,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--out-model-path", type=str, help="Location to write HF model and tokenizer"
+    )
+    parser.add_argument(
+        "--step", type=str, help="Location to write HF model and tokenizer", default='latest'
     )
     args = parser.parse_args()
     main(args)
